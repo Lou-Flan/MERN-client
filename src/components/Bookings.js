@@ -1,24 +1,22 @@
 import React from 'react';
 import { useGlobalState } from '../config/globalState';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import Button from './styled/Button';
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableRow,
+} from '@material-ui/core';
 
 const Bookings = () => {
 	const { store } = useGlobalState();
 	const { bookings } = store;
 
-	const useStyles = makeStyles((theme) => ({
-		seeMore: {
-			marginTop: theme.spacing(3),
-		},
-	}));
-
-	const classes = useStyles();
+	const tableStyles = {
+		width: '60vw',
+	};
 
 	function preventDefault(event) {
 		event.preventDefault();
@@ -26,13 +24,12 @@ const Bookings = () => {
 
 	return (
 		<div>
-			<Table size="small">
+			<Table size="small" style={tableStyles}>
 				<TableHead>
 					<TableRow>
 						<TableCell>Date</TableCell>
 						<TableCell>Name</TableCell>
 						<TableCell>Continent</TableCell>
-						<TableCell>Currency</TableCell>
 						<TableCell align="right">Teeth</TableCell>
 					</TableRow>
 				</TableHead>
@@ -46,16 +43,17 @@ const Bookings = () => {
 									{booking.name} {booking.surname}
 								</TableCell>
 								<TableCell>{booking.continent}</TableCell>
-								<TableCell>{booking.currency}</TableCell>
 								<TableCell align="right">{booking.teeth}</TableCell>
 								<TableCell align="right">
-									<Link to={`/bookings/${booking._id}`}>View</Link>
+									<Link to={`/bookings/${booking._id}`}>
+										<Button>View</Button>
+									</Link>
 								</TableCell>
 							</TableRow>
 						))}
 				</TableBody>
 			</Table>
-			<div className={classes.seeMore}>
+			<div>
 				<Link color="primary" href="#" onClick={preventDefault}>
 					See more orders
 				</Link>

@@ -15,18 +15,15 @@ import stateReducer from './config/stateReducer';
 import { StateContext } from './config/globalState';
 
 const App = () => {
-	// const [bookings, setBookings] = useState([]);
-
 	const initialState = {
 		bookings: [],
 		loggedInUser: null,
 	};
 
 	const [store, dispatch] = useReducer(stateReducer, initialState);
-	const { bookings } = store;
+	const { bookings, loggedInUser } = store;
 
 	useEffect(() => {
-		// setBookings(parentData);
 		dispatch({
 			type: 'setBookings',
 			data: parentData,
@@ -36,10 +33,6 @@ const App = () => {
 	function getBookingFromId(id) {
 		const booking = bookings.find((booking) => booking._id === parseInt(id));
 		return booking;
-		// dispatch({
-		//   type: 'getBookingFromId',
-		//   data: id
-		// })
 	}
 
 	function getNextId() {
@@ -54,7 +47,8 @@ const App = () => {
 					<Nav />
 					<Switch>
 						<Route exact path="/auth/register" component={Register} />
-						<Route exact path="/dashboard" render={UserDashboard} />
+						<Route exact path="/dashboard" component={UserDashboard} />{' '}
+						{/* needs to be private */}
 						<Route
 							exact
 							path="/auth/login"
@@ -62,7 +56,8 @@ const App = () => {
 						/>
 						<Route exact path="/auth/logout" render={Login} />
 						<Route exact path="/success" render={Success} />
-						<Route exact path="/bookings" component={Bookings} />
+						<Route exact path="/bookings" component={Bookings} />{' '}
+						{/* needs to be private */}
 						<Route
 							exact
 							path="/bookings/:id"
@@ -73,13 +68,20 @@ const App = () => {
 									showControls
 								/>
 							)}
-						/>
+						/>{' '}
+						{/* needs to be private */}
 						<Route
 							exact
 							path="/booking/new"
 							render={(props) => <NewBooking {...props} nextId={getNextId()} />}
-						/>
-						<Route exact path="/booking/edit/:id" component={EditBooking} />
+						/>{' '}
+						{/* needs to be private */}
+						<Route
+							exact
+							path="/booking/edit/:id"
+							component={EditBooking}
+						/>{' '}
+						{/* needs to be private */}
 						<Route component={NotFound} />
 					</Switch>
 				</BrowserRouter>
